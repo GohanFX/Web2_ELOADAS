@@ -35,5 +35,36 @@ class ContactController extends Controller
 
         return redirect()->route('contact.create')->with('success', 'Üzenet sikeresen elküldve!');
     }
+
+    // Admin: show edit form for a contact
+    public function edit(Contact $contact)
+    {
+        return Inertia::render('Messages/Edit', [
+            'contact' => $contact
+        ]);
+    }
+
+    // Admin: update a contact
+    public function update(Request $request, Contact $contact)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'subject' => 'nullable|string|max:255',
+            'message' => 'required|string|min:10',
+        ]);
+
+        $contact->update($validated);
+
+        return redirect()->route('messages.index')->with('success', 'Üzenet sikeresen frissítve!');
+    }
+
+    // Admin: delete a contact
+    public function destroy(Contact $contact)
+    {
+        $contact->delete();
+
+        return redirect()->route('messages.index')->with('success', 'Üzenet sikeresen törölve!');
+    }
 }
 

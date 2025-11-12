@@ -13,7 +13,8 @@ class DriverController extends Controller
     public function index()
     {
         $drivers = Driver::with('results')->paginate(20);
-        return Inertia::render('Database/Index', [
+        // Render the Drivers CRUD index (paginated) for admin
+        return Inertia::render('Drivers/Index', [
             'drivers' => $drivers
         ]);
     }

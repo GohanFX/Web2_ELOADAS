@@ -1,4 +1,4 @@
-import { Head } from '@inertiajs/react';
+import { Head, useForm, Link } from '@inertiajs/react';
 import Layout from '@/components/Layout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
@@ -10,6 +10,8 @@ import {
     TableRow,
 } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Trash2, Edit as EditIcon } from 'lucide-react';
 
 interface Contact {
     id: number;
@@ -67,6 +69,7 @@ export default function Index({ contacts }: Props) {
                                             <TableHead>Tárgy</TableHead>
                                             <TableHead>Üzenet</TableHead>
                                             <TableHead>Küldés ideje</TableHead>
+                                            <TableHead>Műveletek</TableHead>
                                         </TableRow>
                                     </TableHeader>
                                     <TableBody>
@@ -102,6 +105,16 @@ export default function Index({ contacts }: Props) {
                                                 <TableCell className="whitespace-nowrap">
                                                     {formatDate(contact.created_at)}
                                                 </TableCell>
+                                                <TableCell className="whitespace-nowrap">
+                                                    <div className="flex items-center gap-2">
+                                                        <Link href={`/contacts/${contact.id}/edit`}>
+                                                            <Button size="sm" variant="ghost" className="p-1">
+                                                                <EditIcon className="h-4 w-4" />
+                                                            </Button>
+                                                        </Link>
+                                                        <DeleteButton id={contact.id} />
+                                                    </div>
+                                                </TableCell>
                                             </TableRow>
                                         ))}
                                     </TableBody>
@@ -112,6 +125,21 @@ export default function Index({ contacts }: Props) {
                 </Card>
             </div>
         </Layout>
+    );
+}
+
+function DeleteButton({ id }: { id: number }) {
+    const { delete: destroy, processing } = useForm();
+
+    function handleDelete() {
+        if (!confirm('Biztosan törölni szeretné ezt az üzenetet?')) return;
+        destroy(`/contacts/${id}`);
+    }
+
+    return (
+        <Button size="sm" variant="destructive" onClick={handleDelete} disabled={processing} className="p-1">
+            <Trash2 className="h-4 w-4" />
+        </Button>
     );
 }
 

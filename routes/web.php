@@ -34,6 +34,9 @@ Route::middleware(['auth'])->group(function () {
     // Messages - Üzenetek menü (registered users)
     Route::get('/messages', [ContactController::class, 'index'])->name('messages.index');
 
+    // CRUD for contacts (admin)
+    Route::resource('contacts', ContactController::class)->only(['edit','update','destroy']);
+
     // Admin routes - Admin menü (admin only)
     Route::middleware(['admin'])->group(function () {
         Route::get('/admin', [DashboardController::class, 'admin'])->name('admin.index');
