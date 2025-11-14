@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Contact;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 
 class ContactController extends Controller
 {
@@ -12,14 +11,14 @@ class ContactController extends Controller
     {
         // Only for authenticated users
         $contacts = Contact::orderBy('created_at', 'desc')->get();
-        return Inertia::render('Messages/Index', [
+        return view('messages.index', [
             'contacts' => $contacts
         ]);
     }
 
     public function create()
     {
-        return Inertia::render('Contact/Create');
+        return view('contact.create');
     }
 
     public function store(Request $request)
@@ -39,7 +38,7 @@ class ContactController extends Controller
     // Admin: show edit form for a contact
     public function edit(Contact $contact)
     {
-        return Inertia::render('Messages/Edit', [
+        return view('messages.edit', [
             'contact' => $contact
         ]);
     }

@@ -6,14 +6,13 @@ use App\Models\Driver;
 use App\Models\Race;
 use App\Models\GP;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Dashboard');
+        return view('dashboard');
     }
 
     public function database()
@@ -22,7 +21,7 @@ class DashboardController extends Controller
         $gps = GP::limit(50)->get();
         $races = Race::with('driver')->limit(50)->get();
 
-        return Inertia::render('Database/Index', [
+        return view('database.index', [
             'drivers' => $drivers,
             'gps' => $gps,
             'races' => $races
@@ -48,7 +47,7 @@ class DashboardController extends Controller
             ->limit(10)
             ->get();
 
-        return Inertia::render('Chart/Index', [
+        return view('chart.index', [
             'driversByCountry' => $driversByCountry,
             'racesByYear' => $racesByYear,
             'topDrivers' => $topDrivers
@@ -64,7 +63,7 @@ class DashboardController extends Controller
             'total_contacts' => \App\Models\Contact::count(),
         ];
 
-        return Inertia::render('Admin/Index', [
+        return view('admin.index', [
             'stats' => $stats
         ]);
     }

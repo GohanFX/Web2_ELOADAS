@@ -7,14 +7,13 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth as AuthFacade;
 use Illuminate\Support\Facades\Hash;
-use Inertia\Inertia;
-use Inertia\Response;
+use Illuminate\View\View;
 
 class Auth extends Controller
 {
-    public function showLogin(): Response
+    public function showLogin(): View
     {
-        return Inertia::render('Auth/Login');
+        return view('auth.login');
     }
 
     public function login(Request $request): RedirectResponse
@@ -34,9 +33,9 @@ class Auth extends Controller
         ])->onlyInput('email');
     }
 
-    public function showRegister(): Response
+    public function showRegister(): View
     {
-        return Inertia::render('Auth/Register');
+        return view('auth.register');
     }
 
     public function register(Request $request): RedirectResponse

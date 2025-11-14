@@ -6,7 +6,6 @@ use App\Models\Driver;
 use App\Models\Race;
 use App\Models\GP;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 
 class DriverController extends Controller
 {
@@ -14,14 +13,14 @@ class DriverController extends Controller
     {
         $drivers = Driver::with('results')->paginate(20);
         // Render the Drivers CRUD index (paginated) for admin
-        return Inertia::render('Drivers/Index', [
+        return view('drivers.index', [
             'drivers' => $drivers
         ]);
     }
 
     public function create()
     {
-        return Inertia::render('Drivers/Create');
+        return view('drivers.create');
     }
 
     public function store(Request $request)
@@ -40,7 +39,7 @@ class DriverController extends Controller
 
     public function edit(Driver $driver)
     {
-        return Inertia::render('Drivers/Edit', [
+        return view('drivers.edit', [
             'driver' => $driver
         ]);
     }

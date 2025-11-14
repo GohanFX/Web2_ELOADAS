@@ -5,11 +5,10 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DriverController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 // Home page - Főoldal
 Route::get('/', function () {
-    return Inertia::render('welcome');
+    return view('welcome');
 })->name('home');
 
 // Authentication routes
@@ -45,4 +44,5 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('drivers', DriverController::class)->except(['show']);
     });
 });
+
 
